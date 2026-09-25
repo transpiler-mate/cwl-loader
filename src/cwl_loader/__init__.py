@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Load, normalize, and serialize CWL documents while preserving metadata."""
+
 from __future__ import annotations
 
 from collections.abc import Mapping
@@ -73,7 +75,8 @@ def _preserve_document_metadata(
     process: Process | list[Process],
     document_metadata: CommentedMap,
     document_has_graph: bool,
-):
+) -> None:
+    """Attach document metadata to each parsed process for serialization."""
     if not document_metadata:
         return
 
@@ -90,14 +93,15 @@ def _preserve_document_metadata(
 def _preserved_document_metadata(
     process: Process | list[Process],
 ) -> Mapping[str, Any] | None:
+    """Find preserved document metadata, falling back to parser metadata."""
     for p in _as_process_list(process):
         metadata = getattr(p, __CWL_DOCUMENT_METADATA_ATTR__, None)
-        if metadata:
+        if isinstance(metadata, Mapping) and metadata:
             return metadata
 
         loading_options = getattr(p, "loadingOptions", None)
         metadata = getattr(loading_options, "addl_metadata", None)
-        if metadata:
+        if isinstance(metadata, Mapping) and metadata:
             return metadata
 
     return None
@@ -105,14 +109,14 @@ def _preserved_document_metadata(
 
 def _has_preserved_graph_document(process: Process | list[Process]) -> bool:
     return any(
-        bool(getattr(p, __CWL_DOCUMENT_HAS_GRAPH_ATTR__, False))
-        for p in _as_process_list(process)
+        bool(getattr(p, __CWL_DOCUMENT_HAS_GRAPH_ATTR__, False)) for p in _as_process_list(process)
     )
 
 
 def _strip_nested_document_controls(
     data: MutableMappingABC[str, Any], document_metadata: Mapping[str, Any]
-):
+) -> None:
+    """Remove document-level controls from nested graph entries in place."""
     graph = data.get(__CWL_GRAPH__)
 
     if not isinstance(graph, list):
@@ -158,7 +162,8 @@ def _strip_serialized_extension_metadata(
     data: MutableMappingABC[str, Any],
     process: Process | list[Process],
     document_metadata: Mapping[str, Any],
-):
+) -> None:
+    """Remove serialized extension fields duplicated by document metadata."""
     keys = _serialized_extension_metadata_keys(process, document_metadata)
     if not keys:
         return
@@ -173,9 +178,7 @@ def _strip_serialized_extension_metadata(
 
 def _restore_graph_document(data: MutableMappingABC[str, Any]) -> CommentedMap:
     restored = CommentedMap()
-    graph_item = CommentedMap(
-        (key, value) for key, value in data.items() if key != __CWL_VERSION__
-    )
+    graph_item = CommentedMap((key, value) for key, value in data.items() if key != __CWL_VERSION__)
     if __CWL_VERSION__ in data:
         restored[__CWL_VERSION__] = data[__CWL_VERSION__]
     restored[__CWL_GRAPH__] = [graph_item]
@@ -287,9 +290,7 @@ def load_cwl_from_yaml(
 
     remove_refs(dereferenced_process)
 
-    logger.debug(
-        "CWL document successfully dereferenced! Now verifying steps[].run integrity..."
-    )
+    logger.debug("CWL document successfully dereferenced! Now verifying steps[].run integrity...")
 
     assert_connected_graph(dereferenced_process)
 
@@ -300,20 +301,14 @@ def load_cwl_from_yaml(
         dereferenced_process = order_graph_by_dependencies(dereferenced_process)
         logger.debug("Sorting process is over.")
 
-    document_metadata = _extract_document_metadata(
-        raw_process, process=dereferenced_process
-    )
+    document_metadata = _extract_document_metadata(raw_process, process=dereferenced_process)
     _preserve_document_metadata(
         process=dereferenced_process,
         document_metadata=document_metadata,
         document_has_graph=document_has_graph,
     )
 
-    return (
-        dereferenced_process
-        if len(dereferenced_process) > 1
-        else dereferenced_process[0]
-    )
+    return dereferenced_process if len(dereferenced_process) > 1 else dereferenced_process[0]
 
 
 def load_cwl_from_stream(
@@ -336,9 +331,7 @@ def load_cwl_from_stream(
     """
     cwl_content = _yaml.load(content)
 
-    logger.debug(
-        f"CWL data of type {type(cwl_content)} successfully loaded from stream"
-    )
+    logger.debug(f"CWL data of type {type(cwl_content)} successfully loaded from stream")
 
     return load_cwl_from_yaml(
         raw_process=cwl_content,
@@ -347,6 +340,28 @@ def load_cwl_from_stream(
         sort=sort,
         session=session,
     )
+
+
+def _local_source_path(path: str, session: requests.Session) -> Path | None:
+    """Resolve local paths and file URIs, returning None for remote URLs.
+
+    Raises:
+        ValueError: If a file URI has a remote authority, query, or relative path.
+    """
+    parsed = urlparse(path)
+    source_path = None
+    if parsed.scheme == "file":
+        if parsed.netloc.lower() not in ("", "localhost"):
+            raise ValueError(f"Non-local file URI authority is not supported: {parsed.netloc}")
+        if parsed.query:
+            raise ValueError(f"File URI queries are not supported: {path}")
+        source_path = Path(url2pathname(parsed.path))
+        if not source_path.is_absolute():
+            raise ValueError(f"File URI must contain an absolute path: {path}")
+    elif not _is_url(path, session):
+        source_path = Path(path)
+
+    return source_path
 
 
 def load_cwl_from_location(
@@ -374,25 +389,13 @@ def load_cwl_from_location(
     logger.debug(f"Loading CWL document from {path}...")
 
     document_uri = path
-    parsed = urlparse(path)
-    source_path = None
-    if parsed.scheme == "file":
-        if parsed.netloc.lower() not in ("", "localhost"):
-            raise ValueError(
-                f"Non-local file URI authority is not supported: {parsed.netloc}"
-            )
-        if parsed.query:
-            raise ValueError(f"File URI queries are not supported: {path}")
-        source_path = Path(url2pathname(parsed.path))
-        if not source_path.is_absolute():
-            raise ValueError(f"File URI must contain an absolute path: {path}")
-    elif not _is_url(path, session):
-        source_path = Path(path)
+    source_path = _local_source_path(path, session)
 
     if source_path is not None:
         document_uri = source_path.resolve().as_uri()
 
-    def _load_cwl_from_stream(stream):
+    def _load_cwl_from_stream(stream: TextIO) -> Process | list[Process]:
+        """Load a stream using the resolved source URI and requested options."""
         logger.debug(f"Reading stream from {path}...")
 
         loaded = load_cwl_from_stream(
@@ -418,9 +421,7 @@ def load_cwl_from_location(
 
         buffer = GzipFile(fileobj=combined) if magic == b"\x1f\x8b" else combined
 
-        return _load_cwl_from_stream(
-            TextIOWrapper(buffer, encoding=__DEFAULT_ENCODING__)
-        )
+        return _load_cwl_from_stream(TextIOWrapper(buffer, encoding=__DEFAULT_ENCODING__))
     if source_path.is_file():
         with source_path.open(encoding=__DEFAULT_ENCODING__) as f:
             return _load_cwl_from_stream(f)
@@ -450,16 +451,12 @@ def load_cwl_from_string_content(
     )
 
 
-def dump_cwl(process: Process | list[Process], stream: TextIO):
-    """
-    Serializes a CWL document to its YAML representation.
+def dump_cwl(process: Process | list[Process], stream: TextIO) -> None:
+    """Write a CWL process or graph to a text stream as YAML.
 
     Args:
-        `process` (`Processes`): The CWL Process or Processes (if the CWL document is a `$graph`)
-        `stream` (`Stream`): The stream where serializing the CWL document
-
-    Returns:
-        `None`: none.
+        process: Process or graph to serialize with preserved document metadata.
+        stream: Destination for the serialized document.
     """
     data = save(
         val=process,  # type: ignore
