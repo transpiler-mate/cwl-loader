@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Fabrice Brito, Simone Tripodi" /><link rel="canonical" href="https://terradue.github.io/cwl-loader/reference/api/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>APIs - CWL Loader</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../styles/css/app.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "APIs";
+        var mkdocs_page_input_path = "reference/api.md";
+        var mkdocs_page_url = "/cwl-loader/reference/api/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../imgs/icon-eoap.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-steps/">First steps</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/load-and-dump/">Load and serialize CWL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/bundle-a-workflow/">Bundle with Transpiler Mate</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cli/">CLI migration</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">APIs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#cwl_loader">cwl_loader</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#cwl_loader.load_cwl_from_location">load_cwl_from_location</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cwl_loader.load_cwl_from_string_content">load_cwl_from_string_content</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cwl_loader.load_cwl_from_stream">load_cwl_from_stream</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cwl_loader.load_cwl_from_yaml">load_cwl_from_yaml</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cwl_loader.dump_cwl">dump_cwl</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/loading-model/">Loading model</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CWL Loader</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">APIs</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/cwl-loader/edit/master/docs/reference/api.md">Edit on Terradue/cwl-loader</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!--
+Copyright 2026 Terradue
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h1 id="api-reference">API reference</h1>
+<p>Load CWL documents from a location, string, stream, or parsed YAML mapping,
+and serialize the resulting processes back to YAML.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="cwl_loader" class="doc doc-heading">
+            <code>cwl_loader</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Load, normalize, and serialize CWL documents while preserving metadata.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="cwl_loader.load_cwl_from_location" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_cwl_from_location</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span> <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a CWL document from an HTTP(S) URL, local path, or local file URI.</p>
+<p>Local file URIs may use an empty authority or localhost. Percent-encoded
+paths are decoded before opening; relative references use the file URI.
+As for other sources, URI fragments do not select a process: the complete
+document is loaded.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>path</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>HTTP(S) URL, local file path, or local file URI.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cwl_version</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__TARGET_CWL_VERSION__">__TARGET_CWL_VERSION__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Target CWL version. Defaults to <code>v1.2</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>sort</code></b>
+                  (<code><span title="bool">bool</span></code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Whether to order processes by their dependencies.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>session</code></b>
+                  (<code><span title="requests.Session">Session</span></code>, default:
+                      <code><span title="cwl_loader._global_session">_global_session</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>HTTP session used to retrieve remote documents.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="cwl_utils.parser.Process">Process</span> | <span title="list">list</span>[<span title="cwl_utils.parser.Process">Process</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>The parsed process, or a list of processes for a multi-process document.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cwl_loader/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-369"><span class="k">def</span><span class="w"> </span><span class="nf">load_cwl_from_location</span><span class="p">(</span>
+</span><span id="__span-0-370">    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="__span-0-371">    <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span>
+</span><span id="__span-0-372">    <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-373">    <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">,</span>
+</span><span id="__span-0-374"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]:</span>
+</span><span id="__span-0-375"><span class="w">    </span><span class="sd">"""Load a CWL document from an HTTP(S) URL, local path, or local file URI.</span>
+</span><span id="__span-0-376">
+</span><span id="__span-0-377"><span class="sd">    Local file URIs may use an empty authority or localhost. Percent-encoded</span>
+</span><span id="__span-0-378"><span class="sd">    paths are decoded before opening; relative references use the file URI.</span>
+</span><span id="__span-0-379"><span class="sd">    As for other sources, URI fragments do not select a process: the complete</span>
+</span><span id="__span-0-380"><span class="sd">    document is loaded.</span>
+</span><span id="__span-0-381">
+</span><span id="__span-0-382"><span class="sd">    Args:</span>
+</span><span id="__span-0-383"><span class="sd">        path: HTTP(S) URL, local file path, or local file URI.</span>
+</span><span id="__span-0-384"><span class="sd">        cwl_version: Target CWL version. Defaults to ``v1.2``.</span>
+</span><span id="__span-0-385"><span class="sd">        sort: Whether to order processes by their dependencies.</span>
+</span><span id="__span-0-386"><span class="sd">        session: HTTP session used to retrieve remote documents.</span>
+</span><span id="__span-0-387">
+</span><span id="__span-0-388"><span class="sd">    Returns:</span>
+</span><span id="__span-0-389"><span class="sd">        The parsed process, or a list of processes for a multi-process document.</span>
+</span><span id="__span-0-390"><span class="sd">    """</span>
+</span><span id="__span-0-391">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading CWL document from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+</span><span id="__span-0-392">
+</span><span id="__span-0-393">    <span class="n">document_uri</span> <span class="o">=</span> <span class="n">path</span>
+</span><span id="__span-0-394">    <span class="n">source_path</span> <span class="o">=</span> <span class="n">_local_source_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+</span><span id="__span-0-395">
+</span><span id="__span-0-396">    <span class="k">if</span> <span class="n">source_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-397">        <span class="n">document_uri</span> <span class="o">=</span> <span class="n">source_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">as_uri</span><span class="p">()</span>
+</span><span id="__span-0-398">
+</span><span id="__span-0-399">    <span class="k">def</span><span class="w"> </span><span class="nf">_load_cwl_from_stream</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]:</span>
+</span><span id="__span-0-400"><span class="w">        </span><span class="sd">"""Load a stream using the resolved source URI and requested options."""</span>
+</span><span id="__span-0-401">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Reading stream from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+</span><span id="__span-0-402">
+</span><span id="__span-0-403">        <span class="n">loaded</span> <span class="o">=</span> <span class="n">load_cwl_from_stream</span><span class="p">(</span>
+</span><span id="__span-0-404">            <span class="n">content</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span>
+</span><span id="__span-0-405">            <span class="n">uri</span><span class="o">=</span><span class="n">document_uri</span><span class="p">,</span>
+</span><span id="__span-0-406">            <span class="n">cwl_version</span><span class="o">=</span><span class="n">cwl_version</span><span class="p">,</span>
+</span><span id="__span-0-407">            <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+</span><span id="__span-0-408">            <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="__span-0-409">        <span class="p">)</span>
+</span><span id="__span-0-410">
+</span><span id="__span-0-411">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stream from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> successfully load!"</span><span class="p">)</span>
+</span><span id="__span-0-412">
+</span><span id="__span-0-413">        <span class="k">return</span> <span class="n">loaded</span>
+</span><span id="__span-0-414">
+</span><span id="__span-0-415">    <span class="k">if</span> <span class="n">source_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-416">        <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-417">        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span><span id="__span-0-418">
+</span><span id="__span-0-419">        <span class="c1"># Read first 2 bytes to check for gzip</span>
+</span><span id="__span-0-420">        <span class="n">magic</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-0-421">        <span class="n">remaining</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>  <span class="c1"># Read rest of the stream</span>
+</span><span id="__span-0-422">        <span class="n">combined</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">magic</span> <span class="o">+</span> <span class="n">remaining</span><span class="p">)</span>
+</span><span id="__span-0-423">
+</span><span id="__span-0-424">        <span class="n">buffer</span> <span class="o">=</span> <span class="n">GzipFile</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">combined</span><span class="p">)</span> <span class="k">if</span> <span class="n">magic</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\x1f\x8b</span><span class="s2">"</span> <span class="k">else</span> <span class="n">combined</span>
+</span><span id="__span-0-425">
+</span><span id="__span-0-426">        <span class="k">return</span> <span class="n">_load_cwl_from_stream</span><span class="p">(</span><span class="n">TextIOWrapper</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">__DEFAULT_ENCODING__</span><span class="p">))</span>
+</span><span id="__span-0-427">    <span class="k">if</span> <span class="n">source_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+</span><span id="__span-0-428">        <span class="k">with</span> <span class="n">source_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">__DEFAULT_ENCODING__</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-0-429">            <span class="k">return</span> <span class="n">_load_cwl_from_stream</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span id="__span-0-430">    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-431">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid source </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">: not a URL or existing file path"</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="cwl_loader.load_cwl_from_string_content" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_cwl_from_string_content</span><span class="p">(</span><span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span> <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span> <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a CWL document from its textual representation.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>content</code></b>
+                  (<code><span title="str">str</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>YAML text representing the CWL document.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>uri</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__DEFAULT_BASE_URI__">__DEFAULT_BASE_URI__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Base URI used to resolve relative references. Defaults to <code>io://</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cwl_version</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__TARGET_CWL_VERSION__">__TARGET_CWL_VERSION__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Target CWL version. Defaults to <code>v1.2</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>sort</code></b>
+                  (<code><span title="bool">bool</span></code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Whether to order processes by their dependencies.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="cwl_utils.parser.Process">Process</span> | <span title="list">list</span>[<span title="cwl_utils.parser.Process">Process</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>The parsed process, or a list of processes for a multi-process document.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cwl_loader/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-434"><span class="k">def</span><span class="w"> </span><span class="nf">load_cwl_from_string_content</span><span class="p">(</span>
+</span><span id="__span-0-435">    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="__span-0-436">    <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span>
+</span><span id="__span-0-437">    <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span>
+</span><span id="__span-0-438">    <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-439"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]:</span>
+</span><span id="__span-0-440"><span class="w">    </span><span class="sd">"""Load a CWL document from its textual representation.</span>
+</span><span id="__span-0-441">
+</span><span id="__span-0-442"><span class="sd">    Args:</span>
+</span><span id="__span-0-443"><span class="sd">        content: YAML text representing the CWL document.</span>
+</span><span id="__span-0-444"><span class="sd">        uri: Base URI used to resolve relative references. Defaults to ``io://``.</span>
+</span><span id="__span-0-445"><span class="sd">        cwl_version: Target CWL version. Defaults to ``v1.2``.</span>
+</span><span id="__span-0-446"><span class="sd">        sort: Whether to order processes by their dependencies.</span>
+</span><span id="__span-0-447">
+</span><span id="__span-0-448"><span class="sd">    Returns:</span>
+</span><span id="__span-0-449"><span class="sd">        The parsed process, or a list of processes for a multi-process document.</span>
+</span><span id="__span-0-450"><span class="sd">    """</span>
+</span><span id="__span-0-451">    <span class="k">return</span> <span class="n">load_cwl_from_stream</span><span class="p">(</span>
+</span><span id="__span-0-452">        <span class="n">content</span><span class="o">=</span><span class="n">StringIO</span><span class="p">(</span><span class="n">content</span><span class="p">),</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">cwl_version</span><span class="o">=</span><span class="n">cwl_version</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span>
+</span><span id="__span-0-453">    <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="cwl_loader.load_cwl_from_stream" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_cwl_from_stream</span><span class="p">(</span><span class="n">content</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span> <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span> <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a CWL document from a stream of data.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>content</code></b>
+                  (<code><span title="typing.TextIO">TextIO</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Text stream containing the CWL document.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>uri</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__DEFAULT_BASE_URI__">__DEFAULT_BASE_URI__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Base URI used to resolve relative references. Defaults to <code>io://</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cwl_version</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__TARGET_CWL_VERSION__">__TARGET_CWL_VERSION__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Target CWL version. Defaults to <code>v1.2</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>sort</code></b>
+                  (<code><span title="bool">bool</span></code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Whether to order processes by their dependencies.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>session</code></b>
+                  (<code><span title="requests.Session">Session</span></code>, default:
+                      <code><span title="cwl_loader._global_session">_global_session</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>HTTP session used to retrieve remote documents.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="cwl_utils.parser.Process">Process</span> | <span title="list">list</span>[<span title="cwl_utils.parser.Process">Process</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>The parsed process, or a list of processes for a multi-process document.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cwl_loader/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-315"><span class="k">def</span><span class="w"> </span><span class="nf">load_cwl_from_stream</span><span class="p">(</span>
+</span><span id="__span-0-316">    <span class="n">content</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">,</span>
+</span><span id="__span-0-317">    <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span>
+</span><span id="__span-0-318">    <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span>
+</span><span id="__span-0-319">    <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-320">    <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">,</span>
+</span><span id="__span-0-321"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]:</span>
+</span><span id="__span-0-322"><span class="w">    </span><span class="sd">"""Load a CWL document from a stream of data.</span>
+</span><span id="__span-0-323">
+</span><span id="__span-0-324"><span class="sd">    Args:</span>
+</span><span id="__span-0-325"><span class="sd">        content: Text stream containing the CWL document.</span>
+</span><span id="__span-0-326"><span class="sd">        uri: Base URI used to resolve relative references. Defaults to ``io://``.</span>
+</span><span id="__span-0-327"><span class="sd">        cwl_version: Target CWL version. Defaults to ``v1.2``.</span>
+</span><span id="__span-0-328"><span class="sd">        sort: Whether to order processes by their dependencies.</span>
+</span><span id="__span-0-329"><span class="sd">        session: HTTP session used to retrieve remote documents.</span>
+</span><span id="__span-0-330">
+</span><span id="__span-0-331"><span class="sd">    Returns:</span>
+</span><span id="__span-0-332"><span class="sd">        The parsed process, or a list of processes for a multi-process document.</span>
+</span><span id="__span-0-333"><span class="sd">    """</span>
+</span><span id="__span-0-334">    <span class="n">cwl_content</span> <span class="o">=</span> <span class="n">_yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-0-335">
+</span><span id="__span-0-336">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CWL data of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">cwl_content</span><span class="p">)</span><span class="si">}</span><span class="s2"> successfully loaded from stream"</span><span class="p">)</span>
+</span><span id="__span-0-337">
+</span><span id="__span-0-338">    <span class="k">return</span> <span class="n">load_cwl_from_yaml</span><span class="p">(</span>
+</span><span id="__span-0-339">        <span class="n">raw_process</span><span class="o">=</span><span class="n">cwl_content</span><span class="p">,</span>
+</span><span id="__span-0-340">        <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span>
+</span><span id="__span-0-341">        <span class="n">cwl_version</span><span class="o">=</span><span class="n">cwl_version</span><span class="p">,</span>
+</span><span id="__span-0-342">        <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+</span><span id="__span-0-343">        <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="__span-0-344">    <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="cwl_loader.load_cwl_from_yaml" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_cwl_from_yaml</span><span class="p">(</span><span class="n">raw_process</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">CommentedMap</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span> <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span> <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a CWL document from a raw dictionary.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>raw_process</code></b>
+                  (<code><span title="collections.abc.Mapping">Mapping</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | <span title="ruamel.yaml.comments.CommentedMap">CommentedMap</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Mapping representing the CWL document.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>uri</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__DEFAULT_BASE_URI__">__DEFAULT_BASE_URI__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Base URI used to resolve relative references. Defaults to <code>io://</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cwl_version</code></b>
+                  (<code><span title="str">str</span></code>, default:
+                      <code><span title="cwl_loader.__TARGET_CWL_VERSION__">__TARGET_CWL_VERSION__</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Target CWL version. Defaults to <code>v1.2</code>.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>sort</code></b>
+                  (<code><span title="bool">bool</span></code>, default:
+                      <code>True</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Whether to order processes by their dependencies.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>session</code></b>
+                  (<code><span title="requests.Session">Session</span></code>, default:
+                      <code><span title="cwl_loader._global_session">_global_session</span></code>
+)
+              –
+              <div class="doc-md-description">
+                <p>HTTP session used to retrieve remote documents.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="cwl_utils.parser.Process">Process</span> | <span title="list">list</span>[<span title="cwl_utils.parser.Process">Process</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>The parsed process, or a list of processes for a multi-process document.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cwl_loader/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-231"><span class="k">def</span><span class="w"> </span><span class="nf">load_cwl_from_yaml</span><span class="p">(</span>
+</span><span id="__span-0-232">    <span class="n">raw_process</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">CommentedMap</span><span class="p">,</span>
+</span><span id="__span-0-233">    <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__DEFAULT_BASE_URI__</span><span class="p">,</span>
+</span><span id="__span-0-234">    <span class="n">cwl_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">__TARGET_CWL_VERSION__</span><span class="p">,</span>
+</span><span id="__span-0-235">    <span class="n">sort</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-236">    <span class="n">session</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="n">_global_session</span><span class="p">,</span>
+</span><span id="__span-0-237"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">]:</span>
+</span><span id="__span-0-238"><span class="w">    </span><span class="sd">"""Load a CWL document from a raw dictionary.</span>
+</span><span id="__span-0-239">
+</span><span id="__span-0-240"><span class="sd">    Args:</span>
+</span><span id="__span-0-241"><span class="sd">        raw_process: Mapping representing the CWL document.</span>
+</span><span id="__span-0-242"><span class="sd">        uri: Base URI used to resolve relative references. Defaults to ``io://``.</span>
+</span><span id="__span-0-243"><span class="sd">        cwl_version: Target CWL version. Defaults to ``v1.2``.</span>
+</span><span id="__span-0-244"><span class="sd">        sort: Whether to order processes by their dependencies.</span>
+</span><span id="__span-0-245"><span class="sd">        session: HTTP session used to retrieve remote documents.</span>
+</span><span id="__span-0-246">
+</span><span id="__span-0-247"><span class="sd">    Returns:</span>
+</span><span id="__span-0-248"><span class="sd">        The parsed process, or a list of processes for a multi-process document.</span>
+</span><span id="__span-0-249"><span class="sd">    """</span>
+</span><span id="__span-0-250">    <span class="n">updated_process</span> <span class="o">=</span> <span class="n">raw_process</span>
+</span><span id="__span-0-251">    <span class="n">document_has_graph</span> <span class="o">=</span> <span class="n">__CWL_GRAPH__</span> <span class="ow">in</span> <span class="n">raw_process</span>
+</span><span id="__span-0-252">
+</span><span id="__span-0-253">    <span class="k">if</span> <span class="n">cwl_version</span> <span class="o">!=</span> <span class="n">raw_process</span><span class="p">[</span><span class="n">__CWL_VERSION__</span><span class="p">]:</span>
+</span><span id="__span-0-254">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+</span><span id="__span-0-255">            <span class="sa">f</span><span class="s2">"Updating the model from version '</span><span class="si">{</span><span class="n">raw_process</span><span class="p">[</span><span class="n">__CWL_VERSION__</span><span class="p">]</span><span class="si">}</span><span class="s2">' to version '</span><span class="si">{</span><span class="n">cwl_version</span><span class="si">}</span><span class="s2">'..."</span>
+</span><span id="__span-0-256">        <span class="p">)</span>
+</span><span id="__span-0-257">
+</span><span id="__span-0-258">        <span class="n">updated_process</span> <span class="o">=</span> <span class="n">_upgrade_document</span><span class="p">(</span>
+</span><span id="__span-0-259">            <span class="n">raw_process</span><span class="o">=</span><span class="n">raw_process</span><span class="p">,</span>
+</span><span id="__span-0-260">            <span class="n">cwl_version</span><span class="o">=</span><span class="n">cwl_version</span><span class="p">,</span>
+</span><span id="__span-0-261">            <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span>
+</span><span id="__span-0-262">        <span class="p">)</span>
+</span><span id="__span-0-263">
+</span><span id="__span-0-264">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Raw CWL document successfully updated to </span><span class="si">{</span><span class="n">cwl_version</span><span class="si">}</span><span class="s2">!"</span><span class="p">)</span>
+</span><span id="__span-0-265">    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-266">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+</span><span id="__span-0-267">            <span class="sa">f</span><span class="s2">"No needs to update the Raw CWL document since it targets already the </span><span class="si">{</span><span class="n">cwl_version</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-0-268">        <span class="p">)</span>
+</span><span id="__span-0-269">
+</span><span id="__span-0-270">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Parsing the raw CWL document to the CWL Utils DOM..."</span><span class="p">)</span>
+</span><span id="__span-0-271">
+</span><span id="__span-0-272">    <span class="n">clean_uri</span><span class="p">,</span> <span class="n">fragment</span> <span class="o">=</span> <span class="n">urldefrag</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+</span><span id="__span-0-273">
+</span><span id="__span-0-274">    <span class="k">if</span> <span class="n">fragment</span><span class="p">:</span>
+</span><span id="__span-0-275">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ignoring fragment #</span><span class="si">{</span><span class="n">fragment</span><span class="si">}</span><span class="s2"> from URI </span><span class="si">{</span><span class="n">clean_uri</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-0-276">
+</span><span id="__span-0-277">    <span class="n">process</span> <span class="o">=</span> <span class="n">load_document_by_yaml</span><span class="p">(</span><span class="n">yaml</span><span class="o">=</span><span class="n">updated_process</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">clean_uri</span><span class="p">,</span> <span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-278">
+</span><span id="__span-0-279">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Raw CWL document successfully parsed to the CWL Utils DOM!"</span><span class="p">)</span>
+</span><span id="__span-0-280">
+</span><span id="__span-0-281">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Dereferencing the steps[].run..."</span><span class="p">)</span>
+</span><span id="__span-0-282">
+</span><span id="__span-0-283">    <span class="n">dereferenced_process</span> <span class="o">=</span> <span class="n">_dereference_steps</span><span class="p">(</span>
+</span><span id="__span-0-284">        <span class="n">process</span><span class="o">=</span><span class="n">process</span><span class="p">,</span>
+</span><span id="__span-0-285">        <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span>
+</span><span id="__span-0-286">        <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="__span-0-287">        <span class="n">loader</span><span class="o">=</span><span class="n">load_cwl_from_location</span><span class="p">,</span>
+</span><span id="__span-0-288">    <span class="p">)</span>
+</span><span id="__span-0-289">
+</span><span id="__span-0-290">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"steps[].run successfully dereferenced! Dereferencing the FQNs..."</span><span class="p">)</span>
+</span><span id="__span-0-291">
+</span><span id="__span-0-292">    <span class="n">remove_refs</span><span class="p">(</span><span class="n">dereferenced_process</span><span class="p">)</span>
+</span><span id="__span-0-293">
+</span><span id="__span-0-294">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"CWL document successfully dereferenced! Now verifying steps[].run integrity..."</span><span class="p">)</span>
+</span><span id="__span-0-295">
+</span><span id="__span-0-296">    <span class="n">assert_connected_graph</span><span class="p">(</span><span class="n">dereferenced_process</span><span class="p">)</span>
+</span><span id="__span-0-297">
+</span><span id="__span-0-298">    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"All steps[].run link are resolvable! "</span><span class="p">)</span>
+</span><span id="__span-0-299">
+</span><span id="__span-0-300">    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+</span><span id="__span-0-301">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Sorting Process instances by dependencies...."</span><span class="p">)</span>
+</span><span id="__span-0-302">        <span class="n">dereferenced_process</span> <span class="o">=</span> <span class="n">order_graph_by_dependencies</span><span class="p">(</span><span class="n">dereferenced_process</span><span class="p">)</span>
+</span><span id="__span-0-303">        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Sorting process is over."</span><span class="p">)</span>
+</span><span id="__span-0-304">
+</span><span id="__span-0-305">    <span class="n">document_metadata</span> <span class="o">=</span> <span class="n">_extract_document_metadata</span><span class="p">(</span><span class="n">raw_process</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="n">dereferenced_process</span><span class="p">)</span>
+</span><span id="__span-0-306">    <span class="n">_preserve_document_metadata</span><span class="p">(</span>
+</span><span id="__span-0-307">        <span class="n">process</span><span class="o">=</span><span class="n">dereferenced_process</span><span class="p">,</span>
+</span><span id="__span-0-308">        <span class="n">document_metadata</span><span class="o">=</span><span class="n">document_metadata</span><span class="p">,</span>
+</span><span id="__span-0-309">        <span class="n">document_has_graph</span><span class="o">=</span><span class="n">document_has_graph</span><span class="p">,</span>
+</span><span id="__span-0-310">    <span class="p">)</span>
+</span><span id="__span-0-311">
+</span><span id="__span-0-312">    <span class="k">return</span> <span class="n">dereferenced_process</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dereferenced_process</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">dereferenced_process</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="cwl_loader.dump_cwl" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">dump_cwl</span><span class="p">(</span><span class="n">process</span><span class="p">:</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">],</span> <span class="n">stream</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Write a CWL process or graph to a text stream as YAML.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>process</code></b>
+                  (<code><span title="cwl_utils.parser.Process">Process</span> | <span title="list">list</span>[<span title="cwl_utils.parser.Process">Process</span>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Process or graph to serialize with preserved document metadata.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>stream</code></b>
+                  (<code><span title="typing.TextIO">TextIO</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Destination for the serialized document.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cwl_loader/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-456"><span class="k">def</span><span class="w"> </span><span class="nf">dump_cwl</span><span class="p">(</span><span class="n">process</span><span class="p">:</span> <span class="n">Process</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Process</span><span class="p">],</span> <span class="n">stream</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-457"><span class="w">    </span><span class="sd">"""Write a CWL process or graph to a text stream as YAML.</span>
+</span><span id="__span-0-458">
+</span><span id="__span-0-459"><span class="sd">    Args:</span>
+</span><span id="__span-0-460"><span class="sd">        process: Process or graph to serialize with preserved document metadata.</span>
+</span><span id="__span-0-461"><span class="sd">        stream: Destination for the serialized document.</span>
+</span><span id="__span-0-462"><span class="sd">    """</span>
+</span><span id="__span-0-463">    <span class="n">data</span> <span class="o">=</span> <span class="n">save</span><span class="p">(</span>
+</span><span id="__span-0-464">        <span class="n">val</span><span class="o">=</span><span class="n">process</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+</span><span id="__span-0-465">        <span class="n">relative_uris</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-0-466">    <span class="p">)</span>
+</span><span id="__span-0-467">    <span class="n">data</span> <span class="o">=</span> <span class="n">_restore_document_metadata</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="n">process</span><span class="p">)</span>
+</span><span id="__span-0-468">
+</span><span id="__span-0-469">    <span class="n">_yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../cli/" class="btn btn-neutral float-left" title="CLI migration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../explanation/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a></p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/cwl-loader/" class="fa fa-code-fork" style="color: #fcfcfc"> Terradue/cwl-loader</a>
+        </span>
+    
+    
+      <span><a href="../cli/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../explanation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Fabrice Brito, Simone Tripodi" /><link rel="canonical" href="https://terradue.github.io/cwl-loader/tutorials/first-steps/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>First steps - CWL Loader</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../styles/css/app.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "First steps";
+        var mkdocs_page_input_path = "tutorials/first-steps.md";
+        var mkdocs_page_url = "/cwl-loader/tutorials/first-steps/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../imgs/icon-eoap.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">First steps</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#install-the-package">Install the package</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-a-cwl-document">Create a CWL document</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load-and-write-it">Load and write it</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load-from-text">Load from text</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/load-and-dump/">Load and serialize CWL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/bundle-a-workflow/">Bundle with Transpiler Mate</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/cli/">CLI migration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/api/">APIs</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/loading-model/">Loading model</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CWL Loader</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Tutorials</li>
+      <li class="breadcrumb-item active">First steps</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/cwl-loader/edit/master/docs/tutorials/first-steps.md">Edit on Terradue/cwl-loader</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="first-steps-with-cwl-loader">First steps with CWL Loader</h1>
+<p>In this tutorial we will load a small CWL document with the Python API and write
+the normalized document back to disk.</p>
+<h2 id="install-the-package">Install the package</h2>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">pip<span class="w"> </span>install<span class="w"> </span>cwl-loader
+</span></code></pre></div>
+<h2 id="create-a-cwl-document">Create a CWL document</h2>
+<p>Create a file named <code>hello.cwl</code>:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><span class="nt">cwlVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
+</span><span id="__span-1-2"><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CommandLineTool</span>
+</span><span id="__span-1-3"><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello</span>
+</span><span id="__span-1-4"><span class="nt">baseCommand</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo</span>
+</span><span id="__span-1-5"><span class="nt">inputs</span><span class="p">:</span>
+</span><span id="__span-1-6"><span class="w">  </span><span class="nt">message</span><span class="p">:</span>
+</span><span id="__span-1-7"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+</span><span id="__span-1-8"><span class="w">    </span><span class="nt">inputBinding</span><span class="p">:</span>
+</span><span id="__span-1-9"><span class="w">      </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span id="__span-1-10"><span class="nt">outputs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</span></code></pre></div>
+<p>This is intentionally small. It gives the loader a real CWL object to parse
+without requiring any external files.</p>
+<h2 id="load-and-write-it">Load and write it</h2>
+<p>Create <code>normalize.py</code> next to <code>hello.cwl</code>:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="kn">from</span><span class="w"> </span><span class="nn">cwl_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">dump_cwl</span><span class="p">,</span> <span class="n">load_cwl_from_location</span>
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="n">process</span> <span class="o">=</span> <span class="n">load_cwl_from_location</span><span class="p">(</span><span class="s2">"hello.cwl"</span><span class="p">)</span>
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="n">Path</span><span class="p">(</span><span class="s2">"build"</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="k">with</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"build/hello.normalized.cwl"</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+</span><span id="__span-2-10">    <span class="n">dump_cwl</span><span class="p">(</span><span class="n">process</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+</span><span id="__span-2-11">
+</span><span id="__span-2-12"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loaded process: </span><span class="si">{</span><span class="n">process</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Run it:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1">python<span class="w"> </span>normalize.py
+</span></code></pre></div>
+<p>You should now have a <code>build/hello.normalized.cwl</code> file. Notice that the loader
+accepted a <code>v1.0</code> input document and wrote a normalized document using the
+target CWL model.</p>
+<h2 id="load-from-text">Load from text</h2>
+<p>The same pattern works when the CWL document is already in memory:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><span class="kn">from</span><span class="w"> </span><span class="nn">cwl_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_cwl_from_string_content</span>
+</span><span id="__span-4-2">
+</span><span id="__span-4-3"><span class="n">process</span> <span class="o">=</span> <span class="n">load_cwl_from_string_content</span><span class="p">(</span><span class="s2">"""</span>
+</span><span id="__span-4-4"><span class="s2">cwlVersion: v1.2</span>
+</span><span id="__span-4-5"><span class="s2">class: CommandLineTool</span>
+</span><span id="__span-4-6"><span class="s2">id: inline-hello</span>
+</span><span id="__span-4-7"><span class="s2">baseCommand: echo</span>
+</span><span id="__span-4-8"><span class="s2">inputs: []</span>
+</span><span id="__span-4-9"><span class="s2">outputs: []</span>
+</span><span id="__span-4-10"><span class="s2">"""</span><span class="p">)</span>
+</span><span id="__span-4-11">
+</span><span id="__span-4-12"><span class="nb">print</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</span></code></pre></div>
+<p>You have now used the two most common pieces of the library: loading CWL into a
+<code>cwl-utils</code> object model and serializing it back to YAML.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../examples/" class="btn btn-neutral float-right" title="Examples">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a></p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/cwl-loader/" class="fa fa-code-fork" style="color: #fcfcfc"> Terradue/cwl-loader</a>
+        </span>
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../examples/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
