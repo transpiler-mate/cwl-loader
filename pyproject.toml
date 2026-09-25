@@ -97,7 +97,7 @@ omit = [
 [tool.coverage.paths]
 cwl_loader = [
   "src/cwl_loader",
-  "*/{{ project_slug }}/src/cwl_loader"
+  "*/cwl-loader/src/cwl_loader"
 ]
 
 [tool.coverage.report]
