@@ -235,16 +235,17 @@ def load_cwl_from_yaml(
     sort: bool = True,
     session: requests.Session = _global_session,
 ) -> Process | list[Process]:
-    """
-    Loads a CWL document from a raw dictionary.
+    """Load a CWL document from a raw dictionary.
 
     Args:
-        `raw_process` (`dict`): The dictionary representing the CWL document
-        `uri` (`Optional[str]`): The CWL document URI. Default to `io://`
-        `cwl_version` (`Optional[str]`): The CWL document version. Default to `v1.2`
+        raw_process: Mapping representing the CWL document.
+        uri: Base URI used to resolve relative references. Defaults to ``io://``.
+        cwl_version: Target CWL version. Defaults to ``v1.2``.
+        sort: Whether to order processes by their dependencies.
+        session: HTTP session used to retrieve remote documents.
 
     Returns:
-        `Processes`: The parsed CWL Process or Processes (if the CWL document is a `$graph`).
+        The parsed process, or a list of processes for a multi-process document.
     """
     updated_process = raw_process
     document_has_graph = __CWL_GRAPH__ in raw_process
@@ -318,16 +319,17 @@ def load_cwl_from_stream(
     sort: bool = True,
     session: requests.Session = _global_session,
 ) -> Process | list[Process]:
-    """
-    Loads a CWL document from a stream of data.
+    """Load a CWL document from a stream of data.
 
     Args:
-        `content` (`TextIO`): The stream where reading the CWL document
-        `uri` (`Optional[str]`): The CWL document URI. Default to `io://`
-        `cwl_version` (`Optional[str]`): The CWL document version. Default to `v1.2`
+        content: Text stream containing the CWL document.
+        uri: Base URI used to resolve relative references. Defaults to ``io://``.
+        cwl_version: Target CWL version. Defaults to ``v1.2``.
+        sort: Whether to order processes by their dependencies.
+        session: HTTP session used to retrieve remote documents.
 
     Returns:
-        `Processes`: The parsed CWL Process or Processes (if the CWL document is a `$graph`).
+        The parsed process, or a list of processes for a multi-process document.
     """
     cwl_content = _yaml.load(content)
 
@@ -370,8 +372,7 @@ def load_cwl_from_location(
     sort: bool = True,
     session: requests.Session = _global_session,
 ) -> Process | list[Process]:
-    """
-    Loads a CWL document from an HTTP(S) URL, local path, or local file URI.
+    """Load a CWL document from an HTTP(S) URL, local path, or local file URI.
 
     Local file URIs may use an empty authority or localhost. Percent-encoded
     paths are decoded before opening; relative references use the file URI.
@@ -379,12 +380,13 @@ def load_cwl_from_location(
     document is loaded.
 
     Args:
-        `path` (`str`): The URL or a file on the local File System where reading the CWL document
-        `uri` (`Optional[str]`): The CWL document URI. Default to `io://`
-        `cwl_version` (`Optional[str]`): The CWL document version. Default to `v1.2`
+        path: HTTP(S) URL, local file path, or local file URI.
+        cwl_version: Target CWL version. Defaults to ``v1.2``.
+        sort: Whether to order processes by their dependencies.
+        session: HTTP session used to retrieve remote documents.
 
     Returns:
-        `Processes`: The parsed CWL Process or Processes (if the CWL document is a `$graph`).
+        The parsed process, or a list of processes for a multi-process document.
     """
     logger.debug(f"Loading CWL document from {path}...")
 
@@ -435,16 +437,16 @@ def load_cwl_from_string_content(
     cwl_version: str = __TARGET_CWL_VERSION__,
     sort: bool = True,
 ) -> Process | list[Process]:
-    """
-    Loads a CWL document from its textual representation.
+    """Load a CWL document from its textual representation.
 
     Args:
-        `content` (`str`): The string text representing the CWL document
-        `uri` (`Optional[str]`): The CWL document URI. Default to `io://`
-        `cwl_version` (`Optional[str]`): The CWL document version. Default to `v1.2`
+        content: YAML text representing the CWL document.
+        uri: Base URI used to resolve relative references. Defaults to ``io://``.
+        cwl_version: Target CWL version. Defaults to ``v1.2``.
+        sort: Whether to order processes by their dependencies.
 
     Returns:
-        `Processes`: The parsed CWL Process or Processes (if the CWL document is a `$graph`)
+        The parsed process, or a list of processes for a multi-process document.
     """
     return load_cwl_from_stream(
         content=StringIO(content), uri=uri, cwl_version=cwl_version, sort=sort
