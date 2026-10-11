@@ -164,7 +164,9 @@ def test_standard_requirements_keep_typed_dom(tmp_path: Path) -> None:
     assert loaded.requirements[0].dockerPull == "busybox"
 
 
-@pytest.mark.parametrize("name", ["DockerRequrement", "calrissian:UnknownRequirement"])
+@pytest.mark.parametrize(
+    "name", ["DockerRequrement", "https://w3id.org/cwl/cwl#UnknownRequirement"]
+)
 def test_unknown_requirements_have_actionable_errors(tmp_path: Path, name: str) -> None:
     path = write_document(tmp_path / "tool.cwl", tool({name: {}}))
     with pytest.raises(RequirementLoadingError, match="Unsupported mandatory requirement") as error:
@@ -197,3 +199,36 @@ def test_extension_loader_does_not_change_global_parser(tmp_path: Path) -> None:
     assert_preserved(load_cwl_from_location(str(path)))
     with pytest.raises(ValidationException):
         load_document_by_yaml(document, path.as_uri(), LoadingOptions(no_link_check=True))
+
+
+@pytest.mark.parametrize(
+    "namespace", ["http://calrissian.example.com/", "https://example.org/ext#"]
+)
+@pytest.mark.parametrize("form", ["map", "list", "expanded"])
+def test_arbitrary_extensions_round_trip(namespace: str, form: str) -> None:
+    name = namespace + "CustomRequirement" if form == "expanded" else "custom:CustomRequirement"
+    requirements = [{"class": name, **PAYLOAD}] if form == "list" else {name: PAYLOAD}
+    document = tool(requirements)
+    document["$namespaces"] = {"custom": namespace}
+    original = deepcopy(document)
+    loaded = load_cwl_from_yaml(document)
+    # Loading another document must not replace the first document's payload.
+    load_cwl_from_yaml(tool({"DockerRequirement": {"dockerPull": "busybox"}}))
+    stream = StringIO()
+    dump_cwl(loaded, stream)
+    reloaded = load_cwl_from_string_content(stream.getvalue())
+    assert not isinstance(reloaded, list)
+    assert reloaded.requirements is not None
+    assert reloaded.requirements[0].save() == {**PAYLOAD, "class": namespace + "CustomRequirement"}
+    assert document == original
+
+
+def test_custom_hints_remain_optional() -> None:
+    document = tool({"calrissian:CustomRequirement": PAYLOAD})
+    document["hints"] = {"calrissian:OptionalRequirement": {"value": "optional"}}
+    stream = StringIO()
+    dump_cwl(load_cwl_from_yaml(document), stream)
+    saved = YAML().load(stream.getvalue())
+    assert [entry["class"] for entry in saved["requirements"]] == [NAMESPACE + "CustomRequirement"]
+    assert saved["hints"][0]["class"] == "calrissian:OptionalRequirement"
+    assert saved["$namespaces"]["calrissian"] == NAMESPACE

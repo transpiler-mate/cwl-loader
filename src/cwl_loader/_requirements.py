@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Preserve supported mandatory extensions without claiming execution support.
+"""Preserve namespaced mandatory extensions without claiming execution support.
 
-The opaque envelope is internal serialization state, not a Dask schema model.
+The opaque envelope is internal serialization state, not an extension schema model.
 Standard requirements still use the public generated CWL validators.
 """
 
@@ -29,12 +29,7 @@ from cwl_utils.parser import cwl_v1_2 as cwl
 from schema_salad.exceptions import ValidationException
 from schema_salad.runtime import Loader
 
-_DASK_REQUIREMENTS = frozenset(
-    (
-        "https://calrissian-cwl.github.io/schema#DaskGatewayRequirement",
-        "http://calrissian-cwl.org/schema#DaskGatewayRequirement",
-    )
-)
+_CWL_NAMESPACE = "https://w3id.org/cwl/cwl#"
 
 
 class RequirementLoadingError(ValueError):
@@ -85,7 +80,7 @@ class _RequirementLoader(Loader):
         docRoot: str | None = None,
         lc: Any | None = None,
     ) -> cwl.ProcessRequirement:
-        """Load a requirement, preserving supported Calrissian payloads.
+        """Validate standard requirements and preserve opaque extension payloads.
 
         Raises:
             RequirementLoadingError: If the class is missing, unsupported, or invalid.
@@ -93,9 +88,6 @@ class _RequirementLoader(Loader):
         if not isinstance(doc, Mapping) or not isinstance(doc.get("class"), str):
             raise RequirementLoadingError(f"Requirement in {baseuri} needs a string 'class'")
         class_uri = _expanded_class(doc["class"], loadingOptions)
-        if class_uri in _DASK_REQUIREMENTS:
-            return _PreservedRequirement.fromDoc(doc, baseuri, loadingOptions)
-
         # Use the local name only to select a validator. fromDoc also validates
         # the complete class URI, so foreign namespaces cannot impersonate CWL.
         local_name = class_uri.rsplit("#", 1)[-1].rsplit(":", 1)[-1]
@@ -111,6 +103,8 @@ class _RequirementLoader(Loader):
                 raise RequirementLoadingError(
                     f"Invalid mandatory requirement {class_uri!r} in {baseuri}: {exc}"
                 ) from exc
+        if ":" in class_uri and not class_uri.startswith(_CWL_NAMESPACE):
+            return _PreservedRequirement.fromDoc(doc, baseuri, loadingOptions)
         raise RequirementLoadingError(
             f"Unsupported mandatory requirement {class_uri!r} in {baseuri}. "
             "Keep it under requirements; this loader needs support for its extension."

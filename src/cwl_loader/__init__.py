@@ -34,6 +34,7 @@ from ruamel.yaml.comments import CommentedMap
 from ._cwlupgrader import _upgrade_document
 from ._dereference import _dereference_steps, remove_refs
 from ._requirements import requirement_loading_options
+from ._serialization import normalize_serialized_document
 from .sort import order_graph_by_dependencies
 from .utils import assert_connected_graph
 
@@ -471,5 +472,6 @@ def dump_cwl(process: Process | list[Process], stream: TextIO) -> None:
         relative_uris=False,
     )
     data = _restore_document_metadata(data=data, process=process)
+    normalize_serialized_document(data)
 
     _yaml.dump(data=data, stream=stream)

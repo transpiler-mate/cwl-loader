@@ -81,7 +81,8 @@ def _remove_step_refs(process: Process) -> None:
         if getattr(step, "run", None):
             step.run = step.run[step.run.rfind("#") :]
         if getattr(step, "scatter", None):
-            step.scatter = _clean_values(step.scatter, f"#{process.id}/")
+            cleaned_scatter = _clean_values(step.scatter, f"#{process.id}/")
+            step.scatter = _clean_values(cleaned_scatter, f"{step.id}/")
 
 
 def _remove_process_refs(process: Process) -> None:
