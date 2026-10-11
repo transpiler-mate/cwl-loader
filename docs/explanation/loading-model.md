@@ -14,14 +14,15 @@ for executing the resulting workflow.
 This separation is useful when you need to inspect, normalize, validate, or
 resolve CWL before passing it to another system.
 
-## Mandatory Calrissian requirements
+## Mandatory extension requirements
 
 When loading into the default CWL v1.2 DOM, CWL Loader automatically preserves
-`DaskGatewayRequirement` under `requirements`. No caller options or changes to
+namespaced custom requirements, including `DaskGatewayRequirement`, under
+`requirements`. No caller options or changes to
 Transpiler Mate resolvers and plugins are needed. This applies to packed graphs,
 inline tools, and external step `run` documents as well as standalone tools.
 
-The recognized class URIs are:
+For example, both Calrissian class URIs are supported:
 
 - `https://calrissian-cwl.github.io/schema#DaskGatewayRequirement`
 - `http://calrissian-cwl.org/schema#DaskGatewayRequirement`
@@ -30,18 +31,28 @@ Namespace prefixes are resolved before recognition. Serialization retains the
 original expanded URI and a deep copy of every payload field, including fields
 unknown to this loader. The requirement stays mandatory; it is never moved to
 `hints` or removed. The parsed envelope exposes `class_` and `save()` rather than
-typed Dask field attributes.
+typed extension field attributes. Custom hints remain optional hints. Each parsed
+process owns its payload, so subsequent loads cannot replace previously loaded
+requirements.
 
 This is opaque preservation for inspection and packaging, not validation of
-the Calrissian field schema or a claim that an execution engine supports Dask.
+extension field schemas or a claim that an execution engine supports them.
 The execution engine remains responsible for that contract. Standard CWL
-requirements continue through the generated `cwl-utils` validators. Unsupported
-mandatory classes and malformed standard requirements raise a `ValueError`
+requirements continue through the generated `cwl-utils` validators. Unknown
+unqualified classes, unknown classes in the CWL namespace, and malformed standard
+requirements raise a `ValueError`
 with the class and source location, preserving validation errors as causes.
 
 The integration uses per-document loading options and public requirement
 classes from `cwl-utils>=0.45`; it does not modify global parser registries.
 Explicit non-v1.2 target versions retain their existing parser behavior.
+
+Serialization uses YAML aliases for identical schema requirements and anonymous
+named types. Different definitions are retained even when they originate from
+the same schema URL; lazy imports are not replaced by an arbitrary resolved copy.
+Synthetic `io:/` identifiers trigger an `io` namespace declaration unless the
+document already defines that prefix. Scatter references are reduced to the
+local step input name.
 
 ## What resolution means
 
