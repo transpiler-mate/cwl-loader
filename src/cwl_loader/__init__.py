@@ -33,6 +33,7 @@ from ruamel.yaml.comments import CommentedMap
 
 from ._cwlupgrader import _upgrade_document
 from ._dereference import _dereference_steps, remove_refs
+from ._requirements import requirement_loading_options
 from .sort import order_graph_by_dependencies
 from .utils import assert_connected_graph
 
@@ -274,7 +275,12 @@ def load_cwl_from_yaml(
     if fragment:
         logger.debug(f"Ignoring fragment #{fragment} from URI {clean_uri}")
 
-    process = load_document_by_yaml(yaml=updated_process, uri=clean_uri, load_all=True)
+    process = load_document_by_yaml(
+        yaml=updated_process,
+        uri=clean_uri,
+        load_all=True,
+        loadingOptions=requirement_loading_options(cwl_version, clean_uri),
+    )
 
     logger.debug("Raw CWL document successfully parsed to the CWL Utils DOM!")
 
