@@ -11,17 +11,13 @@ local release tag.
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
+## [0.28.0] - 2026-10-11
 
 ### Fixed
 
-### Security
+- Preserve mandatory Calrissian Dask Gateway requirements automatically when
+  loading and serializing CWL v1.2, including inline and external tools, without
+  requiring changes in callers. Report unsupported requirement classes clearly.
 
 ## [0.27.0] - 2026-09-25
 
@@ -187,9 +183,10 @@ local release tag.
 - Fix the `dump_cwl` method signature and documentation/notebook build issues.
 - Correct project naming, license content, formatting, tests, and CI setup.
 
-[Unreleased]: https://github.com/transpiler-mate/cwl-loader/compare/v0.27.0...HEAD
-[0.27.0]: https://github.com/transpiler-mate/cwl-loader/compare/v0.26.0...v0.27.0
-[0.26.0]: https://github.com/transpiler-mate/cwl-loader/compare/v0.25.0...v0.26.0
+[Unreleased]: https://github.com/Terradue/cwl-loader/compare/v0.28.0...HEAD
+[0.28.0]: https://github.com/Terradue/cwl-loader/compare/v0.27.0...v0.28.0
+[0.27.0]: https://github.com/Terradue/cwl-loader/compare/v0.26.0...v0.27.0
+[0.26.0]: https://github.com/Terradue/cwl-loader/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/Terradue/cwl-loader/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/Terradue/cwl-loader/compare/v0.23.0...v0.24.0
 [0.23.0]: https://github.com/Terradue/cwl-loader/compare/v0.22.0...v0.23.0
