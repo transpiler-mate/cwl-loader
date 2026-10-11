@@ -15,9 +15,11 @@ local release tag.
 
 ### Fixed
 
-- Preserve mandatory Calrissian Dask Gateway requirements automatically when
-  loading and serializing CWL v1.2, including inline and external tools, without
-  requiring changes in callers. Report unsupported requirement classes clearly.
+- Preserve arbitrary namespaced mandatory extensions with per-document payloads,
+  while retaining standard requirement validation and optional hint semantics.
+- Normalize scatter references to local step input names.
+- Share identical schema and anonymous type definitions when dumping YAML, and
+  declare the synthetic `io` namespace without overriding existing declarations.
 
 ## [0.27.0] - 2026-09-25
 
