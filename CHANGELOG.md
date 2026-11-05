@@ -11,6 +11,20 @@ local release tag.
 
 ## [Unreleased]
 
+## [0.29.0] - 2026-11-05
+
+### Changed
+
+- Dismissed Python 3.10 support since it reached EOL on October 1, 2026
+
+### Added
+
+- Added Python 3.15 support
+
+### Fixed
+
+- Inline `$namespaces` on a valid inline run process is rejected [#43](https://github.com/transpiler-mate/cwl-loader/issues/43)
+
 ## [0.28.0] - 2026-10-11
 
 ### Fixed
@@ -185,7 +199,8 @@ local release tag.
 - Fix the `dump_cwl` method signature and documentation/notebook build issues.
 - Correct project naming, license content, formatting, tests, and CI setup.
 
-[Unreleased]: https://github.com/Terradue/cwl-loader/compare/v0.28.0...HEAD
+[Unreleased]: https://github.com/Terradue/cwl-loader/compare/v0.29.0...HEAD
+[0.29.0]: https://github.com/Terradue/cwl-loader/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/Terradue/cwl-loader/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/Terradue/cwl-loader/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/Terradue/cwl-loader/compare/v0.25.0...v0.26.0

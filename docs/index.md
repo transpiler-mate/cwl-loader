@@ -5,6 +5,13 @@
 models, normalize references, resolve imported workflow steps, and serialize the
 result back to YAML.
 
+!!! warning "Python support changes in v0.29.0"
+
+    Starting with v0.29.0, Python 3.10 is no longer supported, and Python 3.15
+    support has been added. Python 3.10 reached end of life on
+    [October 1, 2026](https://peps.python.org/pep-0619/).
+    Upgrade to Python 3.11 or newer to use v0.29.0 and later.
+
 Install it with:
 
 ```bash

@@ -26,13 +26,14 @@ from urllib.parse import urldefrag, urlparse
 from urllib.request import url2pathname
 
 import requests
-from cwl_utils.parser import Process, load_document_by_yaml, save
+from cwl_utils.parser import Process, save
 from loguru import logger
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 
 from ._cwlupgrader import _upgrade_document
 from ._dereference import _dereference_steps, remove_refs
+from ._namespaces import load_scoped_document
 from ._requirements import requirement_loading_options
 from ._serialization import normalize_serialized_document
 from .sort import order_graph_by_dependencies
@@ -129,7 +130,7 @@ def _strip_nested_document_controls(
             continue
 
         for field in __CWL_DOCUMENT_CONTROL_FIELDS__:
-            if field in document_metadata:
+            if field in document_metadata and item.get(field) == document_metadata[field]:
                 item.pop(field, None)
 
 
@@ -276,11 +277,10 @@ def load_cwl_from_yaml(
     if fragment:
         logger.debug(f"Ignoring fragment #{fragment} from URI {clean_uri}")
 
-    process = load_document_by_yaml(
-        yaml=updated_process,
+    process = load_scoped_document(
+        document=updated_process,
         uri=clean_uri,
-        load_all=True,
-        loadingOptions=requirement_loading_options(cwl_version, clean_uri),
+        options=requirement_loading_options(cwl_version, clean_uri),
     )
 
     logger.debug("Raw CWL document successfully parsed to the CWL Utils DOM!")

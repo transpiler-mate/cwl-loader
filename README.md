@@ -12,6 +12,12 @@
 > [Transpiler Mate](https://terradue.github.io/transpiler-mate/). This package
 > continues to provide the Python API for loading and serializing CWL documents.
 
+> [!WARNING]
+> Starting with v0.29.0, Python 3.10 is no longer supported, and Python 3.15
+> support has been added. Python 3.10 reached end of life on
+> [October 1, 2026](https://peps.python.org/pep-0619/).
+> Upgrade to Python 3.11 or newer to use v0.29.0 and later.
+
 ## Installation
 
 ```bash
