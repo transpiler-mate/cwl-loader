@@ -21,7 +21,7 @@ name = "cwl-loader"
 dynamic = ["version"]
 description = 'Utility loading, normalizing, and serializing (remote) CWL documents.'
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 keywords = [
@@ -129,7 +129,7 @@ test-cov = "pytest --cov=cwl_loader --cov-report=term-missing --cov-report=xml:c
 test-show-setup = "pytest --setup-show {args:tests}"
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
+python = ["3.11", "3.12", "3.13", "3.14", "3.15"]
 
 # ---------------------------------------------------------------------------
 # Pytest
